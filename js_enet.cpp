@@ -21,8 +21,13 @@ void js_enet_initialize(const v8::FunctionCallbackInfo <v8::Value> &args) {
     }
 }
 
+void js_enet_deinitialize(const v8::FunctionCallbackInfo <v8::Value> &args) {
+    enet_deinitialize();
+}
+
 void init(v8::Local <v8::Object> exports) {
     NODE_SET_METHOD(exports, "enet_initialize", js_enet_initialize);
+    NODE_SET_METHOD(exports, "enet_deinitialize", js_enet_deinitialize);
 }
 
 NODE_MODULE(js_enet, init);
