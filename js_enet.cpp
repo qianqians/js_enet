@@ -11,6 +11,7 @@
 #pragma comment(lib, "winmm.lib ")
 #endif
 
+static uint32_t handle = 0;
 static std::map<uint32_t, ENetHost*> ENetHostSet;
 
 void throw_v8_exception(v8::Isolate *isolate, std::string msg) {
@@ -55,10 +56,10 @@ void js_enet_host_create(const v8::FunctionCallbackInfo<v8::Value> &args) {
         return;
     }
 
-    uint32_t handle = ENetHostSet.size();
-    ENetHostSet.insert(std::make_pair(handle, host));
+    auto _h = handle++;
+    ENetHostSet.insert(std::make_pair(_h, host));
 
-    args.GetReturnValue().Set(handle);
+    args.GetReturnValue().Set(_h);
 }
 
 void init(v8::Local <v8::Object> exports) {
