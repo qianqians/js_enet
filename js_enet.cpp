@@ -106,7 +106,7 @@ void js_enet_host_service(const v8::FunctionCallbackInfo<v8::Value> &args) {
         v8::Local<v8::Object> obj = v8::Object::New(isolate);
 
         v8::Local<v8::Integer> type = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.type);
-        obj->Set(v8::String::NewFromUtf8(isolate, "type", v8::NewStringType::kNormal).ToLocalChecked(), type);
+        obj->Set(context, v8::String::NewFromUtf8(isolate, "type", v8::NewStringType::kNormal).ToLocalChecked(), type);
 
         switch (event.type)
         {
@@ -117,9 +117,9 @@ void js_enet_host_service(const v8::FunctionCallbackInfo<v8::Value> &args) {
                 v8::Local<v8::String> _ip = v8::String::NewFromUtf8(isolate, ip, v8::NewStringType::kNormal).ToLocalChecked();
                 v8::Local<v8::Integer> host = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.host);
                 v8::Local<v8::Integer> port = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.port);
-                obj->Set(v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
-                obj->Set(v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
-                obj->Set(v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
 
                 uint64_t peerHandle = (uint64_t)event.peer->address.host << 32 | event.peer->address.port;
                 ENetPeerSet.insert(std::make_pair(peerHandle, event.peer));
@@ -132,12 +132,12 @@ void js_enet_host_service(const v8::FunctionCallbackInfo<v8::Value> &args) {
                 v8::Local<v8::String> _ip = v8::String::NewFromUtf8(isolate, ip, v8::NewStringType::kNormal).ToLocalChecked();
                 v8::Local<v8::Integer> host = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.host);
                 v8::Local<v8::Integer> port = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.port);
-                obj->Set(v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
-                obj->Set(v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
-                obj->Set(v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
 
                 v8::MaybeLocal<v8::Object> data = node::Buffer::Copy(isolate, (char*)event.packet -> data, event.packet -> dataLength);
-                obj->Set(v8::String::NewFromUtf8(isolate, "data", v8::NewStringType::kNormal).ToLocalChecked(), data.ToLocalChecked());
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "data", v8::NewStringType::kNormal).ToLocalChecked(), data.ToLocalChecked());
 
                 enet_packet_destroy (event.packet);
             }
@@ -150,9 +150,9 @@ void js_enet_host_service(const v8::FunctionCallbackInfo<v8::Value> &args) {
                 v8::Local<v8::String> _ip = v8::String::NewFromUtf8(isolate, ip, v8::NewStringType::kNormal).ToLocalChecked();
                 v8::Local<v8::Integer> host = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.host);
                 v8::Local<v8::Integer> port = v8::Uint32::NewFromUnsigned(isolate, (uint32_t)event.peer->address.port);
-                obj->Set(v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
-                obj->Set(v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
-                obj->Set(v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "host", v8::NewStringType::kNormal).ToLocalChecked(), host);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "ip", v8::NewStringType::kNormal).ToLocalChecked(), _ip);
+                obj->Set(context, v8::String::NewFromUtf8(isolate, "port", v8::NewStringType::kNormal).ToLocalChecked(), port);
 
                 uint64_t peerHandle = (uint64_t)event.peer->address.host << 32 | event.peer->address.port;
                 ENetPeerSet.erase(peerHandle);
